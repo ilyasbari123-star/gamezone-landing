@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HK Silksong - GameZone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --bg-2: #121b26;
+            --panel: #111827;
+            --card: #141b23;
+            --green: #00ff66;
+            --text: #f6f8fb;
+            --muted: #9aa4b2;
+            --line: rgba(255, 255, 255, 0.1);
+            --warning: #facc15;
+            --shadow: 0 0 0 1px rgba(0, 255, 102, 0.55), 0 0 25px rgba(0, 255, 102, 0.22);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Inter", sans-serif;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        button, input {
+            font: inherit;
+        }
+
+        .container {
+            max-width: 440px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(0, 255, 102, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 40%, rgba(13, 17, 23, 0.95) 100%);
+        }
+
+        .topbar-detail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            z-index: 10;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+        }
+
+        .back-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+        }
+
+        .back-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .share-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+        }
+
+        .share-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .content {
+            padding: 20px 14px;
+        }
+
+        .app-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .app-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 102, 0.3);
+            flex-shrink: 0;
+        }
+
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .app-info h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--green);
+        }
+
+        .app-dev {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .app-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: var(--green);
+            color: #07140d;
+            border: 1px solid rgba(0, 255, 102, 0.85);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-secondary svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .section {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--green);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .info-box {
+            background: rgba(20, 27, 35, 0.7);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 13px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(20, 27, 35, 0.5);
+            border: 1px solid rgba(0, 255, 102, 0.2);
+            border-radius: 12px;
+        }
+
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(0, 255, 102, 0.15);
+            display: grid;
+            place-items: center;
+            color: var(--green);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .feature-icon svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .feature-text {
+            font-size: 12px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .screenshots {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+        }
+
+        .screenshots::-webkit-scrollbar {
+            display: none;
+        }
+
+        .screenshot-item {
+            min-width: 130px;
+            height: 230px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .rating-section {
+            background: rgba(20, 27, 35, 0.7);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .rating-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .rating-score {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .big-rating {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--green);
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 4px;
+            color: var(--warning);
+        }
+
+        .rating-stars svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .rating-count {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .view-all-reviews {
+            color: var(--green);
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .review-item {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .review-stars {
+            display: flex;
+            gap: 3px;
+            color: var(--warning);
+        }
+
+        .review-stars svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .review-text {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .review-actions {
+            display: flex;
+            gap: 12px;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .review-action {
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .write-review {
+            background: rgba(0, 255, 102, 0.08);
+            border: 1px solid rgba(0, 255, 102, 0.3);
+            color: var(--green);
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 13px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .permission {
+            background: rgba(20, 27, 35, 0.5);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .permission-text {
+            font-size: 12px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--line);
+            margin: 18px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80" alt="HK Silksong">
+            <div class="hero-overlay"></div>
+            <div class="topbar-detail">
+                <button class="back-btn" onclick="history.back()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <button class="share-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- App Header -->
+            <div class="app-header">
+                <div class="app-icon">
+                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=200&q=80" alt="HK Silksong">
+                </div>
+                <div class="app-info">
+                    <h1>HK Silksong</h1>
+                    <div class="app-dev">Metroid Adventure</div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="app-buttons">
+                <button class="btn-primary">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z"></path>
+                    </svg>
+                    INSTALL NOW
+                </button>
+                <button class="btn-secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    WISHLIST
+                </button>
+            </div>
+
+            <!-- App Information -->
+            <div class="section">
+                <div class="section-title">App Information</div>
+                <div class="info-box">
+                    <div class="info-row">
+                        <span class="info-label">VERSION</span>
+                        <span class="info-value">2026.1.0</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">DEVELOPER</span>
+                        <span class="info-value">Team Silks</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">UPDATE RELEASED</span>
+                        <span class="info-value">2 days ago</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">RATING</span>
+                        <span class="info-value">4.8</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">REVIEWS</span>
+                        <span class="info-value">247,500 Reviews</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="section">
+                <div class="section-title">Features</div>
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="feature-text">Epic Action-Adventure: Experience Spider Man on your mobile device.</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="feature-text">Enhanced Graphics: Premium visuals optimized for mobile with stunning HD quality</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="feature-text">Offline Mode: Play without internet connection with full gameplay access</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="feature-text">Multiplayer Support: Connect with friends and play cooperative adventures</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screenshots -->
+            <div class="section">
+                <div class="section-title">Screenshots</div>
+                <div class="screenshots">
+                    <div class="screenshot-item">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=300&q=80" alt="Screenshot">
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=300&q=80" alt="Screenshot">
+                    </div>
+                    <div class="screenshot-item">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=300&q=80" alt="Screenshot">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews -->
+            <div class="section">
+                <div class="rating-section">
+                    <div class="rating-header">
+                        <div class="rating-score">
+                            <span class="big-rating">4.8</span>
+                            <div>
+                                <div class="rating-stars">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                                </div>
+                                <div class="rating-count">247.5K reviews</div>
+                            </div>
+                        </div>
+                        <div class="view-all-reviews">VIEW ALL</div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <!-- Sample Reviews -->
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span class="reviewer-name">User's Verified Review</span>
+                            <div class="review-stars">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                            </div>
+                        </div>
+                        <div class="review-text">This game is absolutely amazing! The graphics are stunning and the gameplay is smooth. Highly recommend to all action game fans.</div>
+                        <div class="review-actions">
+                            <button class="review-action">Helpful (24)</button>
+                            <button class="review-action">Not helpful (2)</button>
+                        </div>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-header">
+                            <span class="reviewer-name">Pro Gamer</span>
+                            <div class="review-stars">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 17.27 6.18 3.73-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73-1.64 7.03L12 17.27Z"></path></svg>
+                            </div>
+                        </div>
+                        <div class="review-text">Excellent game with amazing storyline and challenging bosses. The controls are responsive and feel natural. Worth every penny!</div>
+                        <div class="review-actions">
+                            <button class="review-action">Helpful (156)</button>
+                            <button class="review-action">Not helpful (8)</button>
+                        </div>
+                    </div>
+
+                    <button class="write-review">WRITE A REVIEW</button>
+                </div>
+            </div>
+
+            <!-- Permissions -->
+            <div class="section">
+                <div class="section-title">Permissions</div>
+                <div class="permission">
+                    <div class="permission-text"><strong>📍 Location</strong><br>Accesses your device location for location-based features and gameplay</div>
+                </div>
+                <div class="permission">
+                    <div class="permission-text"><strong>📱 Device Storage</strong><br>Stores game data, saves, and media files on your device</div>
+                </div>
+                <div class="permission">
+                    <div class="permission-text"><strong>🎤 Microphone</strong><br>Required for multiplayer voice chat and communications</div>
+                </div>
+            </div>
+
+            <!-- Download Button at Bottom -->
+            <button class="btn-primary" style="width: 100%; margin-bottom: 30px;">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"></path>
+                </svg>
+                DOWNLOAD NOW
+            </button>
+        </div>
+    </div>
+</body>
+</html>
